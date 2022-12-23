@@ -1,7 +1,9 @@
 import { DirectionNode, InplaceNodePalette } from "parsegraph-direction";
 import Artist from "parsegraph-artist";
-import Block, { BlockNode } from "./Block";
+import Block from "./Block";
 import { style } from "./BlockStyle";
+
+type BlockNode = DirectionNode<Block>;
 
 export default class BlockPalette implements InplaceNodePalette<Block> {
   _mathMode: boolean;

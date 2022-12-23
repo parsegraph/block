@@ -9,7 +9,6 @@ import BlockPainter, {
   CanvasBlockPainter,
   BlockType,
 } from "parsegraph-blockpainter";
-import { BlockNode } from "./Block";
 import { LINE_THICKNESS } from "./BlockStyle";
 import Size from "parsegraph-size";
 import Rect from "parsegraph-rect";
@@ -17,8 +16,12 @@ import Color from "parsegraph-color";
 import log, { logEnterc, logLeave } from "parsegraph-log";
 import { Projector } from "parsegraph-projector";
 import BlockScene from "./BlockScene";
+import Block from "./Block";
+import { DirectionNode } from "parsegraph-direction";
 
 const LABEL_WEIGHT_MULTIPLIER = 12;
+
+type BlockNode = DirectionNode<Block>;
 
 export default class DefaultBlockScene extends BlockScene {
   _backgroundColor: Color;
