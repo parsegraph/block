@@ -13,7 +13,7 @@ const defaultArtist = new BlockArtist((proj: Projector) => {
 
 export default class BlockNode extends DirectionNode<Block> {
   constructor(type: string | BlockType) {
-    super(null);
+    super();
     this.setValue(new Block(this, style(type), defaultArtist));
   }
 }
