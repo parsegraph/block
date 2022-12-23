@@ -262,6 +262,11 @@ export default class Block extends BasicPainted<Block> {
       }
     }
 
+    if (style.mathMode) {
+      bodySize.setWidth(Math.max(bodySize.width(), style.minWidth));
+      bodySize.setHeight(Math.max(bodySize.height(), style.minHeight));
+    }
+
     return bodySize;
   }
 
