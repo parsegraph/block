@@ -2,6 +2,7 @@ DIST_NAME = block
 
 SCRIPT_FILES = \
 	src/BlockPalette.ts \
+	src/BlockNode.ts \
 	src/BlockScene.ts \
 	src/index.ts \
 	src/logo.ts \
