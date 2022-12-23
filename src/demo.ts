@@ -7,12 +7,13 @@ import { BasicProjector } from "parsegraph-projector";
 import Camera from "parsegraph-camera";
 import { showInCamera } from "parsegraph-showincamera";
 import DefaultBlockPalette from "./DefaultBlockPalette";
+import BlockCaret from './BlockCaret';
 
 import { WorldLabels } from "parsegraph-scene";
 
 const palette = new DefaultBlockPalette();
 
-const buildGraph = () => {
+const buildGraphRandom = () => {
   const car = new DirectionCaret<Block>("u", palette);
 
   const root = car.root();
@@ -29,13 +30,61 @@ const buildGraph = () => {
     while (dir === Direction.NULL || car.has(dir)) {
       dir = dirs[Math.floor(Math.random() * dirs.length)];
     }
-    car.spawn(dir, "b");
-    car.node().value().setLabel("parsegraph");
+    car.spawn(dir, Math.random() > 0.5 ? "b" : "u");
+    car.node().value().setLabel(Math.random() > 0.5 ? "parsegraph" : "");
     car.pull(dir);
     car.move(dir);
   }
   return root;
 };
+
+const buildGraphSwitch = () => {
+  const car = new BlockCaret("u", palette);
+  car.spawnMove('i', 'u');
+  car.spawnMove('f', 'u');
+  car.label('parsegraph');
+  car.spawnMove('f', 'b');
+  car.spawnMove('f', 'b');
+  car.spawnMove('i', 'u');
+  car.push();
+  car.spawnMove('i', 'u');
+  car.spawnMove('d', 'u');
+  car.pop();
+  car.spawnMove('d', 'u');
+  car.label('parsegraph');
+  car.spawnMove('d', 'b');
+  return car.root();
+};
+
+const buildGraphBuds = () => {
+  const car = new BlockCaret("u", palette);
+  const max = Math.random() * 10;
+  for(let i = 0; i < max; ++i) {
+    car.spawnMove('i', Math.random() > 0.5 ? 'u' : 'b');
+  }
+  return car.root();
+};
+
+const buildGraphLogo = () => {
+  const car = new BlockCaret("u", palette);
+  car.spawn('f', 'u');
+  car.spawn('b', 'u');
+  car.spawnMove('d', 'b');
+  car.label('Parsegraph');
+  return car.root();
+};
+
+const buildGraph = () => {
+  const builders = [
+    buildGraphLogo,
+    buildGraphBuds,
+    buildGraphSwitch,
+    buildGraphRandom,
+    buildGraphRandom,
+    buildGraphRandom
+  ];
+  return builders[Math.floor(Math.random() * builders.length)]();
+}
 
 document.addEventListener("DOMContentLoaded", () => {
   const root = document.getElementById("demo");
