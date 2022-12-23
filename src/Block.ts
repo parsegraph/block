@@ -62,11 +62,19 @@ export default class Block extends BasicPainted<Block> {
       case Axis.HORIZONTAL:
         return this.horizontalSeparation(dir);
       case Axis.Z:
+        if (this.node().hasNode(Direction.INWARD) && !this.hasLabel()) {
+          switch (this.node().nodeAlignmentMode(Direction.INWARD)) {
+            case Alignment.INWARD_VERTICAL:
+              return this.verticalPadding() + this.borderThickness();
+            default:
+              return 2*this.horizontalPadding() + this.borderThickness();
+          }
+        }
         switch (this.node().nodeAlignmentMode(Direction.INWARD)) {
           case Alignment.INWARD_VERTICAL:
             return this.verticalPadding() + this.borderThickness();
           default:
-            return this.horizontalPadding() + this.borderThickness();
+            return 2*this.horizontalPadding() + this.borderThickness();
         }
     }
   }
@@ -106,20 +114,22 @@ export default class Block extends BasicPainted<Block> {
       : this.blockStyle().backgroundColor;
   }
 
+  hasLabel(): boolean {
+    return this.realLabel() && !this.realLabel().isEmpty();
+  }
+
   label(): string {
-    const l = this.realLabel();
-    if (!l) {
+    if (!this.hasLabel()) {
       return null;
     }
-    return l.getText();
+    return this.realLabel().getText();
   }
 
   glyphCount(counts: any, pagesPerTexture: number): number {
-    const l = this.realLabel();
-    if (!l) {
+    if (!this.hasLabel()) {
       return 0;
     }
-    return l.glyphCount(counts, pagesPerTexture);
+    return this.realLabel().glyphCount(counts, pagesPerTexture);
   }
 
   realLabel(): Label {
@@ -129,6 +139,11 @@ export default class Block extends BasicPainted<Block> {
   setLabel(text: string, font?: Font): void {
     if (!font) {
       font = defaultFont();
+    }
+    if (text === '') {
+      this._label = null;
+      this.invalidateLayout();
+      return;
     }
     if (!this._label) {
       this._label = new Label(font);
@@ -157,30 +172,32 @@ export default class Block extends BasicPainted<Block> {
   sizeWithoutPadding(bodySize?: Size): Size {
     if (!bodySize) {
       // console.log(new Error("Creating size"));
-      bodySize = new Size();
+      bodySize = new Size(0, 0);
+    } else {
+      bodySize[0] = 0;
+      bodySize[1] = 0;
     }
 
     // Find the size of this node's drawing area.
     const style = this.blockStyle();
 
-    const label = this.realLabel();
-    if (label && !label.isEmpty()) {
+    const node = this.node();
+    const hasInward = node.hasNode(Direction.INWARD);
+
+    if (this.hasLabel()) {
+      const label = this.realLabel();
       const scaling = style.fontSize / label.font().fontSize();
       bodySize[0] = label.width() * scaling;
       bodySize[1] = label.height() * scaling;
       if (isNaN(bodySize[0]) || isNaN(bodySize[1])) {
         throw new Error("Label returned a NaN size.");
       }
-    } else if (!bodySize) {
-      // console.log(new Error("Creating size"));
-      bodySize = new Size(style.minWidth, style.minHeight);
-    } else {
+    } else if (!hasInward) {
       bodySize[0] = style.minWidth;
       bodySize[1] = style.minHeight;
     }
 
-    const node = this.node();
-    if (node.hasNode(Direction.INWARD)) {
+    if (hasInward) {
       const nestedNode = node.nodeAt(Direction.INWARD);
       const nestedSize = nestedNode.value().getLayout().extentSize();
       const scale = nestedNode.state().scale();
@@ -193,7 +210,7 @@ export default class Block extends BasicPainted<Block> {
           Math.max(bodySize.width(), scale * nestedSize.width())
         );
 
-        if (this.label()) {
+        if (this.hasLabel()) {
           // Allow for the content's size.
           bodySize.setHeight(
             Math.max(
@@ -207,13 +224,13 @@ export default class Block extends BasicPainted<Block> {
           bodySize.setHeight(
             Math.max(
               bodySize.height(),
-              scale * nestedSize.height() + 2 * this.verticalPadding()
+              scale * nestedSize.height()
             )
           );
         }
       } else {
         // Align horizontal.
-        if (this.label()) {
+        if (this.hasLabel()) {
           // Allow for the content's size.
           bodySize.setWidth(
             bodySize.width() +
@@ -221,6 +238,7 @@ export default class Block extends BasicPainted<Block> {
               scale * nestedSize.width()
           );
         } else {
+          console.log(bodySize.width(), scale * nestedSize.width(), scale);
           bodySize.setWidth(
             Math.max(bodySize.width(), scale * nestedSize.width())
           );
@@ -229,14 +247,14 @@ export default class Block extends BasicPainted<Block> {
         bodySize.setHeight(
           Math.max(
             bodySize.height(),
-            scale * nestedSize.height() + 2 * this.verticalPadding()
+            scale * nestedSize.height()
           )
         );
       }
     }
 
     // Buds appear circular
-    if (this.isBud()) {
+    if (this.isBud() && !hasInward) {
       const aspect = bodySize.width() / bodySize.height();
       if (aspect < 2 && aspect > 1 / 2) {
         bodySize.setWidth(Math.max(bodySize.width(), bodySize.height()));
@@ -244,8 +262,6 @@ export default class Block extends BasicPainted<Block> {
       }
     }
 
-    bodySize[0] = Math.max(style.minWidth, bodySize[0]);
-    bodySize[1] = Math.max(style.minHeight, bodySize[1]);
     return bodySize;
   }
 
