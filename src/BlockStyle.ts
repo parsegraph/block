@@ -50,10 +50,10 @@ type BlockStyle = {
 
 export const LINE_COLOR = new Color(0.5, 0.4, 0.4, 0.5);
 export const SELECTED_LINE_COLOR = new Color(0.8, 0.8, 0.8, 1);
-export const LINE_THICKNESS = BUD_RADIUS/4;
+export const LINE_THICKNESS = BUD_RADIUS / 4;
 
-const BACKGROUND_COLOR = new Color(250/255, 244/255, 236/255, 0.2);
-const SLOT_BACKGROUND_COLOR = new Color(.73, .726, .719, .2);
+const BACKGROUND_COLOR = new Color(250 / 255, 244 / 255, 236 / 255, 0.2);
+const SLOT_BACKGROUND_COLOR = new Color(0.73, 0.726, 0.719, 0.2);
 const FONT_COLOR = new Color(0.125, 0.125, 0.125, 1);
 
 const lineColor = LINE_COLOR;

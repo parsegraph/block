@@ -81,11 +81,11 @@ document.addEventListener("DOMContentLoaded", () => {
     labels.render(proj, cam.scale());
     const ctx = proj.overlay();
     ctx.resetTransform();
-    ctx.font = '18px sans-serif';
-    ctx.fillStyle = 'black'
-    ctx.textBaseline = 'top';
-    ctx.textAlign = 'left';
-    ctx.fillText(`scale=${cam.scale()}`, 0, 0)
+    ctx.font = "18px sans-serif";
+    ctx.fillStyle = "black";
+    ctx.textBaseline = "top";
+    ctx.textAlign = "left";
+    ctx.fillText(`scale=${cam.scale()}`, 0, 0);
   };
 
   const refresh = () => {
@@ -95,14 +95,14 @@ document.addEventListener("DOMContentLoaded", () => {
     pizza.populate(n);
     showInCamera(n, cam, false);
     redraw();
-    //const rand = () => Math.floor(Math.random() * 255);
-    //document.body.style.backgroundColor = `rgb(${rand()}, ${rand()}, ${rand()})`;
+    // const rand = () => Math.floor(Math.random() * 255);
+    // document.body.style.backgroundColor = `rgb(${rand()}, ${rand()}, ${rand()})`;
     // document.body.style.backgroundColor = `rgb(233, 204, 164)`;
     // Pine cone
-    //document.body.style.backgroundColor = `rgb(221, 210, 186)`;
-    //document.body.style.backgroundColor = `rgb(177, 156, 149)`;
+    // document.body.style.backgroundColor = `rgb(221, 210, 186)`;
+    // document.body.style.backgroundColor = `rgb(177, 156, 149)`;
     document.body.style.backgroundColor = `rgb(149, 149, 149)`;
-    //document.body.style.backgroundColor = `rgb(221, 210, 186)`;
+    // document.body.style.backgroundColor = `rgb(221, 210, 186)`;
   };
 
   const dot = document.createElement("div");
@@ -134,13 +134,13 @@ document.addEventListener("DOMContentLoaded", () => {
   root.addEventListener("touchstart", (e) => {
     clicked = true;
   });
-  let lastTouch = [0, 0]
+  let lastTouch = [0, 0];
   root.addEventListener("touchmove", (e) => {
     const [movementX, movementY] = [
       e.touches[0].clientX - lastTouch[0],
       e.touches[0].clientY - lastTouch[1],
     ];
-    lastTouch = [e.touches[0].clientX, e.touches[0].clientY]
+    lastTouch = [e.touches[0].clientX, e.touches[0].clientY];
     cam.adjustOrigin(movementX / cam.scale(), movementY / cam.scale());
   });
   root.addEventListener("touchend", (e) => {

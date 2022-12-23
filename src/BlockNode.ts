@@ -1,11 +1,11 @@
-import Block from './Block';
+import Block from "./Block";
 import { DirectionNode } from "parsegraph-direction";
-import BlockType from './BlockType';
-import { style } from './BlockStyle';
-import BlockArtist from './BlockArtist';
+import BlockType from "./BlockType";
+import { style } from "./BlockStyle";
+import BlockArtist from "./BlockArtist";
 import { Projector } from "parsegraph-projector";
 import DefaultBlockScene from "./DefaultBlockScene";
-import {BlockType as BlockPainterType } from 'parsegraph-blockpainter';
+import { BlockType as BlockPainterType } from "parsegraph-blockpainter";
 
 const defaultArtist = new BlockArtist((proj: Projector) => {
   return new DefaultBlockScene(proj, BlockPainterType.ROUNDED);
