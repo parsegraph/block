@@ -244,7 +244,6 @@ export default class DefaultBlockScene extends BlockScene {
       painter.setBorderColor(
         style.borderColor // .premultiply(node.backdropColor())
       );
-      console.log(style.backgroundColor);
       painter.setBackgroundColor(
         style.backgroundColor // .premultiply(node.backdropColor())
       );
