@@ -11,7 +11,7 @@ import BlockStyle, {
 import Font from "parsegraph-font";
 import Label, { defaultFont } from "./Label";
 
-export type BlockNode = PaintedNode<Block>;
+type BlockNode = PaintedNode<Block>;
 
 export default class Block extends BasicPainted<Block> {
   _focused: boolean;
