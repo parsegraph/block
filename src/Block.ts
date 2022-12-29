@@ -67,14 +67,14 @@ export default class Block extends BasicPainted<Block> {
             case Alignment.INWARD_VERTICAL:
               return this.verticalPadding() + this.borderThickness();
             default:
-              return 2*this.horizontalPadding() + this.borderThickness();
+              return 2 * this.horizontalPadding() + this.borderThickness();
           }
         }
         switch (this.node().nodeAlignmentMode(Direction.INWARD)) {
           case Alignment.INWARD_VERTICAL:
             return this.verticalPadding() + this.borderThickness();
           default:
-            return 2*this.horizontalPadding() + this.borderThickness();
+            return 2 * this.horizontalPadding() + this.borderThickness();
         }
     }
   }
@@ -140,7 +140,7 @@ export default class Block extends BasicPainted<Block> {
     if (!font) {
       font = defaultFont();
     }
-    if (text === '') {
+    if (text === "") {
       this._label = null;
       this.invalidateLayout();
       return;
@@ -222,10 +222,7 @@ export default class Block extends BasicPainted<Block> {
           );
         } else {
           bodySize.setHeight(
-            Math.max(
-              bodySize.height(),
-              scale * nestedSize.height()
-            )
+            Math.max(bodySize.height(), scale * nestedSize.height())
           );
         }
       } else {
@@ -245,10 +242,7 @@ export default class Block extends BasicPainted<Block> {
         }
 
         bodySize.setHeight(
-          Math.max(
-            bodySize.height(),
-            scale * nestedSize.height()
-          )
+          Math.max(bodySize.height(), scale * nestedSize.height())
         );
       }
     }
