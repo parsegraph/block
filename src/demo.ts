@@ -1,4 +1,4 @@
-import Direction from "parsegraph-direction";
+import Direction, {Alignment} from "parsegraph-direction";
 import { Pizza } from "parsegraph-artist";
 import { WorldTransform } from "parsegraph-scene";
 import Block from "./Block";
@@ -32,6 +32,9 @@ const buildGraphRandom = () => {
     }
     car.spawn(dir, Math.random() > 0.5 ? "b" : "u");
     car.node().value().setLabel(Math.random() > 0.5 ? "parsegraph" : "");
+    if (dir === Direction.INWARD) {
+      car.align(dir, Math.random() > 0.5 ? Alignment.INWARD_VERTICAL : Alignment.INWARD_HORIZONTAL);
+    }
     car.pull(dir);
     car.move(dir);
   }
