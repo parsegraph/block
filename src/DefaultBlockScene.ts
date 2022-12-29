@@ -277,7 +277,7 @@ export default class DefaultBlockScene extends BlockScene {
         // Align vertical.
         labelX = layout.groupX() - (fontScale * label.width()) / 2;
         labelY =
-          layout.groupY() - (layout.groupScale() * nodeSize.height()) / 2;
+          layout.groupY() - (layout.groupScale() * nodeSize.height()) / 2 + (fontScale * label.height()) / 2;
       } else {
         // Align horizontal.
         labelX = layout.groupX() - (layout.groupScale() * nodeSize.width()) / 2;
