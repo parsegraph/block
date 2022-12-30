@@ -1,4 +1,4 @@
-import Direction, {Alignment} from "parsegraph-direction";
+import Direction, {Alignment, nameDirection} from "parsegraph-direction";
 import { Pizza } from "parsegraph-artist";
 import { WorldTransform } from "parsegraph-scene";
 import Block from "./Block";
@@ -13,22 +13,26 @@ import { WorldLabels } from "parsegraph-scene";
 
 const palette = new DefaultBlockPalette();
 
+const dirs = [
+  Direction.FORWARD,
+  Direction.DOWNWARD,
+  Direction.INWARD,
+  Direction.UPWARD,
+  Direction.BACKWARD,
+];
+const randDir = ()=>{
+  return dirs[Math.floor(Math.random() * dirs.length)];
+}
+
 const buildGraphRandom = () => {
   const car = new DirectionCaret<Block>("u", palette);
 
   const root = car.root();
 
-  const dirs = [
-    Direction.FORWARD,
-    Direction.DOWNWARD,
-    Direction.INWARD,
-    Direction.UPWARD,
-    Direction.BACKWARD,
-  ];
   for (let i = 0; i < 20; ++i) {
     let dir = Direction.NULL;
     while (dir === Direction.NULL || car.has(dir)) {
-      dir = dirs[Math.floor(Math.random() * dirs.length)];
+      dir = randDir();
     }
     car.spawn(dir, Math.random() > 0.5 ? "b" : "u");
     if (dir === Direction.INWARD) {
@@ -80,6 +84,16 @@ const buildGraphLogo = () => {
   return car.root();
 };
 
+const buildGraphLong = () => {
+  const car = new BlockCaret("u", palette);
+  const dir = randDir();
+  for(let i = 0; i < 100; ++i) {
+    car.spawnMove(dir, "b");
+    car.label(nameDirection(dir));
+  }
+  return car.root();
+};
+
 const buildGraph = () => {
   const builders = [
     buildGraphLogo,
@@ -88,8 +102,10 @@ const buildGraph = () => {
     buildGraphRandom,
     buildGraphRandom,
     buildGraphRandom,
+    buildGraphLong,
   ];
-  return builders[Math.floor(Math.random() * builders.length)]();
+  return buildGraphLong();
+  //return builders[Math.floor(Math.random() * builders.length)]();
 };
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -133,8 +149,18 @@ document.addEventListener("DOMContentLoaded", () => {
     pizza.setWorldTransform(wt);
     pizza.paint();
     pizza.render();
-    labels.render(proj, cam.scale());
+    //labels.render(proj, cam.x() - proj.width()/2, cam.y() - proj.height()/2, cam.scale());
     const ctx = proj.overlay();
+    ctx.lineCap = "square";
+    labels.render(
+      proj,
+      -cam.x() + cam.width()/2,
+      -cam.y() + cam.height()/2,
+      2*cam.width()/cam.scale(),
+      2*cam.height()/cam.scale(),
+      cam.scale()
+    );
+
     ctx.resetTransform();
     ctx.font = "18px sans-serif";
     ctx.fillStyle = "black";
