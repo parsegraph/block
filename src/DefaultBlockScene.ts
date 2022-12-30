@@ -331,8 +331,8 @@ export default class DefaultBlockScene extends BlockScene {
           .labels()
           ?.draw(
             block.label(),
-            block.getLayout().absoluteX(),
-            block.getLayout().absoluteY(),
+            label.x() + label.width()/2,
+            label.y(),
             weight * LABEL_WEIGHT_MULTIPLIER,
             block.getLayout().absoluteScale() * 0.5,
             block.blockStyle().backgroundColor

@@ -93,6 +93,14 @@ export default class Label {
     return this._text.length;
   }
 
+  x():number {
+    return this._x;
+  }
+
+  y():number {
+    return this._y;
+  }
+
   setPos(x: number, y: number, scale: number) {
     this._x = x;
     this._y = y;
