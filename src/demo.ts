@@ -8,6 +8,7 @@ import Camera from "parsegraph-camera";
 import { showInCamera } from "parsegraph-showincamera";
 import DefaultBlockPalette from "./DefaultBlockPalette";
 import BlockCaret from "./BlockCaret";
+import {copyStyle} from './BlockStyle';
 
 import { WorldLabels } from "parsegraph-scene";
 
@@ -90,11 +91,15 @@ const buildGraphLogo = () => {
 const buildGraphLong = () => {
   const car = new BlockCaret("u", palette);
   const dir = randDir();
+  const smallBlock = copyStyle('b');
+  smallBlock.fontSize /= 3;
   for(let i = 0; i < 30; ++i) {
     car.spawnMove(dir, "b");
     car.label(nameDirection(dir));
     if (Math.random() > 0.5) {
       car.shrink();
+    } else {
+      car.node().value().setBlockStyle(smallBlock);
     }
   }
   return car.root();

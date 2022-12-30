@@ -9,7 +9,7 @@ import BlockPainter, {
   CanvasBlockPainter,
   BlockType,
 } from "parsegraph-blockpainter";
-import { LINE_THICKNESS } from "./BlockStyle";
+import { style as getStyle, LINE_THICKNESS } from "./BlockStyle";
 import Size from "parsegraph-size";
 import Rect from "parsegraph-rect";
 import Color from "parsegraph-color";
@@ -327,7 +327,7 @@ export default class DefaultBlockScene extends BlockScene {
           ? style.selectedFontColor
           : style.fontColor;
         label.paint(this.projector(), fontColor);
-        const labelScale = block.getLayout().absoluteScale();
+        const labelScale = block.getLayout().absoluteScale() * (block.blockStyle().fontSize / getStyle('b').fontSize);
         this.worldTransform()
           .labels()
           ?.draw(
