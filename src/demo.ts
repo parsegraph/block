@@ -44,6 +44,9 @@ const buildGraphRandom = () => {
       .setLabel(Math.random() > 0.5 ? "parsegraph" : "");
     car.pull(dir);
     car.move(dir);
+    if (Math.random() > 0.5) {
+      car.shrink();
+    }
   }
   return root;
 };
@@ -87,9 +90,12 @@ const buildGraphLogo = () => {
 const buildGraphLong = () => {
   const car = new BlockCaret("u", palette);
   const dir = randDir();
-  for(let i = 0; i < 100; ++i) {
+  for(let i = 0; i < 30; ++i) {
     car.spawnMove(dir, "b");
     car.label(nameDirection(dir));
+    if (Math.random() > 0.5) {
+      car.shrink();
+    }
   }
   return car.root();
 };
@@ -149,15 +155,14 @@ document.addEventListener("DOMContentLoaded", () => {
     pizza.setWorldTransform(wt);
     pizza.paint();
     pizza.render();
-    //labels.render(proj, cam.x() - proj.width()/2, cam.y() - proj.height()/2, cam.scale());
     const ctx = proj.overlay();
     ctx.lineCap = "square";
     labels.render(
       proj,
-      -cam.x() + cam.width()/2,
-      -cam.y() + cam.height()/2,
-      2*cam.width()/cam.scale(),
-      2*cam.height()/cam.scale(),
+      -cam.x() + (cam.width()/cam.scale())/2,
+      -cam.y() + (cam.height()/cam.scale())/2,
+      cam.width()/cam.scale(),
+      cam.height()/cam.scale(),
       cam.scale()
     );
 
