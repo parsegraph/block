@@ -110,7 +110,7 @@ export default class DefaultBlockScene extends BlockScene {
   }
 
   paint(): boolean {
-    logEnterc("DefaultNodePainter paints", "Painting paint group");
+    logEnterc("Painting", "Painting block scene");
     const counts: { [key: string]: number } = {};
     this.blocks().forEach((node) => {
       log("Counting node {0}", node);
@@ -132,10 +132,11 @@ export default class DefaultBlockScene extends BlockScene {
     // return;
     // }
     // checkGLError(gl, "Before Node drawNode");
-    log("Drawing node {0}", node);
+    logEnterc("Painting", "Drawing node {0}", "" + node.state().id());
 
     this.paintLines(node);
     this.paintBlock(node);
+    logLeave();
     // checkGLError(gl, "After Node drawNode");
   }
 
@@ -251,6 +252,7 @@ export default class DefaultBlockScene extends BlockScene {
 
     // Draw the block.
     const size = layout.groupSize(this.bodySize);
+    log("Painting block at group pos(" + layout.groupX() +", " + layout.groupY() +") with size " + size.width() + "x" + size.height());
     painter.drawBlock(
       layout.groupX(),
       layout.groupY(),
