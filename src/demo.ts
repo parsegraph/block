@@ -1,4 +1,4 @@
-import Direction, {Alignment, nameDirection} from "parsegraph-direction";
+import Direction, { Alignment, nameDirection } from "parsegraph-direction";
 import { Pizza } from "parsegraph-artist";
 import { WorldTransform } from "parsegraph-scene";
 import Block from "./Block";
@@ -8,7 +8,7 @@ import Camera from "parsegraph-camera";
 import { showInCamera } from "parsegraph-showincamera";
 import DefaultBlockPalette from "./DefaultBlockPalette";
 import BlockCaret from "./BlockCaret";
-import {copyStyle} from './BlockStyle';
+import { copyStyle } from "./BlockStyle";
 
 import { WorldLabels } from "parsegraph-scene";
 
@@ -21,9 +21,9 @@ const dirs = [
   Direction.UPWARD,
   Direction.BACKWARD,
 ];
-const randDir = ()=>{
+const randDir = () => {
   return dirs[Math.floor(Math.random() * dirs.length)];
-}
+};
 
 const buildGraphRandom = () => {
   const car = new DirectionCaret<Block>("u", palette);
@@ -37,7 +37,12 @@ const buildGraphRandom = () => {
     }
     car.spawn(dir, Math.random() > 0.5 ? "b" : "u");
     if (dir === Direction.INWARD) {
-      car.align(dir, Math.random() > 0.5 ? Alignment.INWARD_VERTICAL : Alignment.INWARD_HORIZONTAL);
+      car.align(
+        dir,
+        Math.random() > 0.5
+          ? Alignment.INWARD_VERTICAL
+          : Alignment.INWARD_HORIZONTAL
+      );
     }
     car
       .node()
@@ -91,9 +96,9 @@ const buildGraphLogo = () => {
 const buildGraphLong = () => {
   const car = new BlockCaret("u", palette);
   const dir = randDir();
-  const smallBlock = copyStyle('b');
+  const smallBlock = copyStyle("b");
   smallBlock.fontSize /= 3;
-  for(let i = 0; i < 30; ++i) {
+  for (let i = 0; i < 30; ++i) {
     car.spawnMove(dir, "b");
     car.label(nameDirection(dir));
     if (Math.random() > 0.5) {
@@ -116,7 +121,7 @@ const buildGraph = () => {
     buildGraphLong,
   ];
   return buildGraphLong();
-  //return builders[Math.floor(Math.random() * builders.length)]();
+  // return builders[Math.floor(Math.random() * builders.length)]();
 };
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -164,10 +169,10 @@ document.addEventListener("DOMContentLoaded", () => {
     ctx.lineCap = "square";
     labels.render(
       proj,
-      -cam.x() + (cam.width()/cam.scale())/2,
-      -cam.y() + (cam.height()/cam.scale())/2,
-      cam.width()/cam.scale(),
-      cam.height()/cam.scale(),
+      -cam.x() + cam.width() / cam.scale() / 2,
+      -cam.y() + cam.height() / cam.scale() / 2,
+      cam.width() / cam.scale(),
+      cam.height() / cam.scale(),
       cam.scale()
     );
 

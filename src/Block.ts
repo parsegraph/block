@@ -235,7 +235,7 @@ export default class Block extends BasicPainted<Block> {
               scale * nestedSize.width()
           );
         } else {
-          //console.log(bodySize.width(), scale * nestedSize.width(), scale);
+          // console.log(bodySize.width(), scale * nestedSize.width(), scale);
           bodySize.setWidth(
             Math.max(bodySize.width(), scale * nestedSize.width())
           );

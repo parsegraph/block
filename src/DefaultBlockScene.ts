@@ -252,7 +252,16 @@ export default class DefaultBlockScene extends BlockScene {
 
     // Draw the block.
     const size = layout.groupSize(this.bodySize);
-    log("Painting block at group pos(" + layout.groupX() +", " + layout.groupY() +") with size " + size.width() + "x" + size.height());
+    log(
+      "Painting block at group pos(" +
+        layout.groupX() +
+        ", " +
+        layout.groupY() +
+        ") with size " +
+        size.width() +
+        "x" +
+        size.height()
+    );
     painter.drawBlock(
       layout.groupX(),
       layout.groupY(),
@@ -279,7 +288,9 @@ export default class DefaultBlockScene extends BlockScene {
         // Align vertical.
         labelX = layout.groupX() - (fontScale * label.width()) / 2;
         labelY =
-          layout.groupY() - (layout.groupScale() * nodeSize.height()) / 2 + (fontScale * label.height()) / 2;
+          layout.groupY() -
+          (layout.groupScale() * nodeSize.height()) / 2 +
+          (fontScale * label.height()) / 2;
       } else {
         // Align horizontal.
         labelX = layout.groupX() - (layout.groupScale() * nodeSize.width()) / 2;
@@ -329,7 +340,9 @@ export default class DefaultBlockScene extends BlockScene {
           ? style.selectedFontColor
           : style.fontColor;
         label.paint(this.projector(), fontColor);
-        const labelScale = block.getLayout().absoluteScale() * (block.blockStyle().fontSize / getStyle('b').fontSize);
+        const labelScale =
+          block.getLayout().absoluteScale() *
+          (block.blockStyle().fontSize / getStyle("b").fontSize);
         this.worldTransform()
           .labels()
           ?.draw(

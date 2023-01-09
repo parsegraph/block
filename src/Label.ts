@@ -93,11 +93,11 @@ export default class Label {
     return this._text.length;
   }
 
-  x():number {
+  x(): number {
     return this._x;
   }
 
-  y():number {
+  y(): number {
     return this._y;
   }
 
