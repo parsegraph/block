@@ -41,6 +41,7 @@ type BlockStyle = {
   horizontalSeparation: number;
   lineColor: Color;
   selectedLineColor: Color;
+  dashes?: number[];
 };
 
 export const LINE_COLOR = new Color(0.5, 0.4, 0.4, 0.5);

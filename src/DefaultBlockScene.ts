@@ -5,10 +5,7 @@ import Direction, {
   directionSign,
 } from "parsegraph-direction";
 
-import BlockPainter, {
-  CanvasBlockPainter,
-  BlockType,
-} from "parsegraph-blockpainter";
+import { CanvasBlockPainter, BlockType } from "parsegraph-blockpainter";
 import { style as getStyle, LINE_THICKNESS } from "./BlockStyle";
 import Size from "parsegraph-size";
 import Rect from "parsegraph-rect";
@@ -25,7 +22,7 @@ type BlockNode = DirectionNode<Block>;
 
 export default class DefaultBlockScene extends BlockScene {
   _backgroundColor: Color;
-  _blockPainter: BlockPainter;
+  _blockPainter: CanvasBlockPainter;
   _renderBlocks: boolean;
   _renderText: boolean;
   _mass: number;
@@ -262,13 +259,15 @@ export default class DefaultBlockScene extends BlockScene {
         "x" +
         size.height()
     );
+    console.log("dash", style.dashes);
     painter.drawBlock(
       layout.groupX(),
       layout.groupY(),
       size.width(),
       size.height(),
       layout.groupScale() * style.borderRoundness,
-      layout.groupScale() * style.borderThickness
+      layout.groupScale() * style.borderThickness,
+      style.dashes
     );
 
     // Draw the label.
