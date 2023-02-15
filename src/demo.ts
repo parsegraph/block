@@ -1,4 +1,5 @@
 import Direction, { Alignment, nameDirection } from "parsegraph-direction";
+import Color from 'parsegraph-color';
 import { Pizza } from "parsegraph-artist";
 import { WorldTransform } from "parsegraph-scene";
 import Block from "./Block";
@@ -110,6 +111,23 @@ const buildGraphLong = () => {
   return car.root();
 };
 
+const buildGraphDashed = () => {
+  const car = new BlockCaret("u", palette);
+  const dir = randDir();
+  const dashedBlock = copyStyle("b");
+  dashedBlock.dashes = [5, 5];
+  dashedBlock.borderThickness = 4;
+  dashedBlock.borderColor = new Color(1, 1, 1, 1);
+  dashedBlock.backgroundColor = new Color(.8, .8, 1, 0);
+  dashedBlock.fontColor = new Color(1, 1, 1, 1);
+  for (let i = 0; i < 30; ++i) {
+    car.spawnMove(dir, "b");
+    car.label(nameDirection(dir));
+    car.node().value().setBlockStyle(dashedBlock);
+  }
+  return car.root();
+};
+
 const buildGraph = () => {
   const builders = [
     buildGraphLogo,
@@ -119,9 +137,9 @@ const buildGraph = () => {
     buildGraphRandom,
     buildGraphRandom,
     buildGraphLong,
+    buildGraphDashed
   ];
-  return buildGraphLong();
-  // return builders[Math.floor(Math.random() * builders.length)]();
+  return builders[Math.floor(Math.random() * builders.length)]();
 };
 
 document.addEventListener("DOMContentLoaded", () => {
