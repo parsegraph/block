@@ -259,7 +259,6 @@ export default class DefaultBlockScene extends BlockScene {
         "x" +
         size.height()
     );
-    console.log("dash", style.dashes);
     painter.drawBlock(
       layout.groupX(),
       layout.groupY(),
