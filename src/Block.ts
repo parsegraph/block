@@ -108,6 +108,13 @@ export default class Block extends BasicPainted<Block> {
     this.invalidateLayout();
   }
 
+  updateBlockStyle(style: object): void {
+    this.setBlockStyle({
+      ...this.blockStyle(),
+      ...style,
+    });
+  }
+
   backdropColor(): Color {
     return this.isSelected()
       ? this.blockStyle().selectedBackgroundColor
