@@ -1,5 +1,5 @@
 import Direction, { Alignment, nameDirection } from "parsegraph-direction";
-import Color from 'parsegraph-color';
+import Color from "parsegraph-color";
 import { Pizza } from "parsegraph-artist";
 import { WorldTransform } from "parsegraph-scene";
 import Block from "./Block";
@@ -121,7 +121,7 @@ const buildGraphDashed = () => {
   dashedBlock.dashes = [5, 5];
   dashedBlock.borderThickness = 4;
   dashedBlock.borderColor = new Color(1, 1, 1, 1);
-  dashedBlock.backgroundColor = new Color(.8, .8, 1, 0);
+  dashedBlock.backgroundColor = new Color(0.8, 0.8, 1, 0);
   dashedBlock.fontColor = new Color(1, 1, 1, 1);
   for (let i = 0; i < 30; ++i) {
     car.spawnMove(dir, "b");
@@ -140,7 +140,7 @@ const buildGraph = () => {
     buildGraphRandom,
     buildGraphRandom,
     buildGraphLong,
-    buildGraphDashed
+    buildGraphDashed,
   ];
   return builders[Math.floor(Math.random() * builders.length)]();
 };
