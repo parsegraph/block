@@ -45,9 +45,6 @@ const buildGraphRandom = () => {
           : Alignment.INWARD_HORIZONTAL
       );
     }
-    if (Math.random() > 0.5) {
-      car.node().crease();
-    }
     car
       .node()
       .value()
